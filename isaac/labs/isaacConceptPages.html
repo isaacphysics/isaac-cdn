@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Isaac Concept Pages</title>
+<script>
+    /* Constants: */
+    var leftArrow  = 37;  // Key code for the left arrow key.
+    var upArrow    = 38;
+    var rightArrow = 39;
+    var downArrow  = 40;
+    var rKey       = 82;
+
+    var panRate    = 25;
+    var zoomRate   = 1.1;
+    var reverse = true;
+
+    /* Global variables: */
+    var theSvgElement;
+
+    function processKeyPress(evt) {
+        var viewBox = theSvgElement.getAttribute('viewBox');
+        var viewBoxValues = viewBox.split(' ');
+        /* The array is filled with strings, convert values to floats: */
+        viewBoxValues = viewBoxValues.map(parseFloat)
+        var panInc = panRate * viewBoxValues[2] / window.innerWidth;
+        if (reverse) {
+            panInc *= -1;
+        }
+        switch (evt.keyCode) {
+            case leftArrow:
+                viewBoxValues[0] += panInc; // Increase the x-coordinate value of the viewBox attribute by the amount given by panRate.
+                break;
+            case rightArrow:
+                viewBoxValues[0] -= panInc; // Decrease the x-coordinate value of the viewBox attribute by the amount given by panRate.
+                break;
+            case upArrow:
+                viewBoxValues[1] += panInc; // Increase the y-coordinate value of the viewBox attribute by the amount given by panRate.
+                break;
+            case downArrow:
+                viewBoxValues[1] -= panInc; // Decrease the y-coordinate value of the viewBox attribute by the amount given by panRate.
+                break;
+            case rKey:
+                reverse = !reverse;
+                break;
+        }
+        theSvgElement.setAttribute('viewBox', viewBoxValues.join(' ')); // Convert the viewBoxValues array into a string with a white space character between the given values.
+    }
+
+    function mouseWheelZoom(e) {
+        var evt=window.event || e //equalize event object
+        var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta
+
+        var viewBox = theSvgElement.getAttribute('viewBox');
+        var viewBoxValues = viewBox.split(' ');
+        viewBoxValues = viewBoxValues.map(parseFloat)
+        var oldViewBoxValues = viewBox.split(' ');
+        oldViewBoxValues = oldViewBoxValues.map(parseFloat)
+
+        if (delta >= 0) {
+            viewBoxValues[2] = viewBoxValues[2] / zoomRate;
+            viewBoxValues[3] = viewBoxValues[3] / zoomRate;
+            viewBoxValues[0] -= (viewBoxValues[2] - oldViewBoxValues[2])/2;
+            viewBoxValues[1] -= (viewBoxValues[3] - oldViewBoxValues[3])/2;
+        } else {
+            viewBoxValues[2] = viewBoxValues[2] * zoomRate;
+            viewBoxValues[3] = viewBoxValues[3] * zoomRate;
+            viewBoxValues[0] -= (viewBoxValues[2] - oldViewBoxValues[2])/2;
+            viewBoxValues[1] -= (viewBoxValues[3] - oldViewBoxValues[3])/2;
+        }
+        theSvgElement.setAttribute('viewBox', viewBoxValues.join(' '));
+    }
+
+    function colourEdges(e) {
+        var element = ('srcElement' in e) ? e.srcElement : e.target
+        var edgesToCol = theSvgElement.querySelectorAll('g[id^="' + element.id + '|"]');
+        element.setAttribute("class", "node test");
+        for (var i = 0, length = edgesToCol.length; i < length; i++) {
+            var n = theSvgElement.querySelectorAll('g[id="' + edgesToCol[i].id.split("|")[1] + '"]')[0];
+            n.setAttribute('class', 'node test');
+            edgesToCol[i].getElementsByTagName('path')[0].setAttribute('class', 'test');
+            edgesToCol[i].getElementsByTagName('polygon')[0].setAttribute('class', 'test');
+        }
+    }
+    function unColourEdges(e) {
+        var element = ('srcElement' in e) ? e.srcElement : e.target;
+        var edgesToCol = theSvgElement.querySelectorAll('g[id^="' + element.id + '|"]');
+        element.setAttribute("class", "node");
+        for (var i = 0, length = edgesToCol.length; i < length; i++) {
+            var n = theSvgElement.querySelectorAll('g[id="' + edgesToCol[i].id.split("|")[1] + '"]')[0];
+            n.setAttribute('class', 'node');
+            edgesToCol[i].getElementsByTagName('path')[0].setAttribute('class', '');
+            edgesToCol[i].getElementsByTagName('polygon')[0].setAttribute('class', '');
+        }
+    }
+
+    function initialize()
+    {
+        if (Math.min(window.innerWidth, window.innerHeight) < 480) {
+            document.getElementsByTagName("body")[0].setAttribute("style", "margin:0px;");
+            return;
+        }
+      /* Set the global variable and detect if the browser supports SVG:  */
+        var svgDoc = document.getElementById('objectElement').contentDocument;
+        var styleElement = svgDoc.createElementNS("http://www.w3.org/2000/svg", "style");
+        styleElement.textContent = "g.node {opacity: .5;} g.test {opacity: 1;} path { stroke: #cccccc!important; stroke-width:1; } polygon {fill: #cccccc!important; stroke: #cccccc!important;} path.test {stroke: #000000!important; stroke-width:3;} polygon.test {fill: #000000!important; stroke: #000000!important;}"; // add whatever you need here
+        svgDoc.getElementById("svg2").appendChild(styleElement);
+
+        // This might be a bad idea if not a GraphViz svg file!
+        var backgroundPolygon = svgDoc.getElementsByTagName("polygon")[0];
+        backgroundPolygon.parentNode.removeChild(backgroundPolygon);
+
+        var theSvgDocument = document.getElementById('objectElement').getSVGDocument();
+        theSvgElement = theSvgDocument.documentElement;
+        if(theSvgElement.namespaceURI != "http://www.w3.org/2000/svg") {  // Alert the user if their browser does not support SVG.
+            alert("Inline SVG in HTML5 is not supported. This document requires a browser that supports HTML5 inline SVG.");
+        }
+        /* Add event listeners:  */
+        window.addEventListener('keydown', processKeyPress, true); // Seems to avoid initial keypress issues
+        theSvgElement.addEventListener('keydown', processKeyPress, true);  // Works well for returning focus after click, but not initial keypresses
+        theSvgElement.addEventListener('mousewheel', mouseWheelZoom, false);
+        theSvgElement.addEventListener("DOMMouseScroll", mouseWheelZoom, false);
+
+
+        var viewBox = theSvgElement.getAttribute('viewBox');
+        if (viewBox != null) {
+            var viewBoxValues = viewBox.split(' ');
+            viewBoxValues[0] = 0
+            viewBoxValues[1] = 0
+            viewBoxValues[2] = 500 * window.innerWidth / viewBoxValues[2];
+            viewBoxValues[3] = 500 * window.innerHeight / viewBoxValues[3];
+        } else {
+            var w = 500;
+            var h = 500;
+            viewBoxValues = [w/2, h/2, w, h];
+        }
+        theSvgElement.setAttribute("width", window.innerWidth);
+        theSvgElement.setAttribute("height", window.innerHeight);
+        theSvgElement.setAttribute('viewBox', viewBoxValues.join(' '));
+
+        var nodes = svgDoc.getElementsByClassName("node");
+        for (var i = 0, length = nodes.length; i < length; i++) {
+            nodes[i].addEventListener('mouseenter', colourEdges, false);
+            nodes[i].addEventListener('mouseleave', unColourEdges, false);
+        }
+    }
+  </script>
+</head>
+
+<body onload="initialize();" style="overflow: hidden;margin:0px;">
+    <object id="objectElement" data="isaacConceptPages.svg" type="image/svg+xml" style="margin:0px;"></object>
+    <!--- <object id="objectElement" data="isaacConceptPages.svg" type="image/svg+xml" style="margin:0px;"></object> -->
+</body>
+
+</html>
