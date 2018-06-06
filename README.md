@@ -1,2 +1,3 @@
-# dtg-cdn
-CDN content for DTG
+# isaac-cdn
+
+Static content for Isaac Physics
