@@ -1,0 +1,7 @@
+<svg>
+        <g fill="#FFFFFF">
+            <path strokeWidth="6" d="M16 52l0 -10"/>
+            <circle points="16,52"/>
+        </g>
+        <polygon points="29,0 0,14.5 0,43.5 29,58 58,43.5 58,14.5" fill="#000000"/>
+    </svg>
