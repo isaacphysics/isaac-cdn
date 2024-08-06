@@ -1,27 +1,25 @@
  -- Table creation --
 
-CREATE TABLE IF NOT EXISTS "stage" (
-	"stage_id"	INTEGER NOT NULL,
+CREATE TABLE "stage" (
 	"stage_name"	TEXT NOT NULL,
-	"capacity"	INTEGER NOT NULL,
-	"location"	TEXT NOT NULL,
-	"description"	TEXT ,
-	PRIMARY KEY("stage_id")
+	"capacity"	INTEGER,
+	"location"	TEXT,
+	"description"	TEXT,
+	PRIMARY KEY("stage_name")
 );
 
-CREATE TABLE IF NOT EXISTS artist (
-	"artist_id"	INTEGER NOT NULL,
-	"stage_id"	INTEGER NOT NULL,
-	"artist_name"	TEXT NOT NULL,
-	"genre"	TEXT,
-	"start_time"	TEXT NOT NULL,
-	"end_time"	TEXT NOT NULL,
-	PRIMARY KEY("artist_id"),
-	FOREIGN KEY("stage_id") REFERENCES "stage"("stage_id")
+CREATE TABLE "performance" (
+	"performance_id"	INTEGER NOT NULL,
+	"stage_name"	TEXT NOT NULL,
+	"artist"	TEXT,
+	"genre"	TEXT NOT NULL,
+	"start_time"	TEXT,
+	"end_time"	TEXT,
+	PRIMARY KEY("performance_id"),
+	FOREIGN KEY("stage_name") REFERENCES "stage"("stage_name")
 );
 
--- Inserting data --
-
+-- Inserting data -- 
 
 INSERT INTO stage (stage_name, capacity, location, description) VALUES
 ('Sunshine Stage',500,'Main Field','The biggest stage, with plenty of room to dance!'),
@@ -34,25 +32,24 @@ INSERT INTO stage (stage_name, capacity, location, description) VALUES
 
 
 
-INSERT INTO artist (stage_id, artist_name, genre, start_time, end_time) VALUES 
-(3,'The Happy Hippo Band','Children''s','10:00:00','11:30:00'),
-(2,'The Sunny Day Singers','Folk','11:00:00','12:30:00'),
-(1,'DJ Bubble Pop','Dance','12:30:00','14:30:00'),
-(7,'The Rainbow Drum Circle','World','13:30:00','14:30:00'),
-(3,'The Silly Songbirds','Children''s','12:30:00','14:00:00'),
-(5,'The Acoustic Guitar Duo','Acoustic','14:00:00','15:00:00'),
-(4,'The Funky Family Band','Funk','16:00:00','18:00:00'),
-(3,'The Magical Marionette Show','Puppetry','16:00:00','17:30:00'),
-(4,'The Starlight Orchestra','Classical','20:00:00','21:00:00'),
-(1,'DJ Glowstick','Electronic','21:00:00 ','22:00:00'),
-(6,'The Whimsical Wizards','Comedy','21:30:00','22:30:00'),
-(3,'The Animal Adventures Band','Children''s','18:30:00','20:00:00'),
-(4,'Lucy the Lullaby Lady','Lullabies','12:00:00','13:30:00'),
-(6,'The Juggling Jesters','Comedy','13:00:00','15:00:00'),
-(7,'Mariachi Fiesta','World','15:30:00','17:00:00'),
-(5,'The Storyteller''s Circle','Storytelling','15:30:00','17:30:00'),
-(1,'The Bouncing Ball Brigade','Dance','17:00:00','19:30:00'),
-(6,'The Kazoo Crew','Comedy','17:30:00','19:00:00'),
-(7,'The Global Grooves Ensemble','World','18:30:00','20:00:00'),
-(2,'The Dreamy Lullaby Harp','Instrumental','19:30:00','21:00:00');
-
+INSERT INTO performance  (stage_name, artist, genre, start_time, end_time )  VALUES  
+('Kids'' Corner','The Happy Hippo Band','Children''s','10:00:00','11:30:00'),
+('Harmony Grove','The Sunny Day Singers','Folk','11:00:00','12:30:00'),
+('Sunshine Stage','DJ Bubble Pop','Dance','12:30:00','14:30:00'),
+('World Music Oasis','The Rainbow Drum Circle', 'World','13:30:00','14:30:00'),
+('Kids'' Corner','The Silly Songbirds','Children''s','12:30:00', '14:00:00'),
+('Acoustic Alley','The Acoustic Guitar Duo','Acoustic','14:00:00','15:00:00'),
+('Melody Meadow','The Funky Family Band','Family','16:00:00','18:00:00'),
+('Kids'' Corner','The Magical Marionette Show','Children''s','16:00:00','17:30:00'),
+('Melody Meadow','The Starlight Orchestra','Family','20:00:00','21:00:00'),
+('Sunshine Stage','DJ Glowstick','Dance','21:00:00','22:00:00'),
+('Discovery Den','The Whimsical Wizards','Comedy','21:30:00','22:30:00'),
+('Kids'' Corner','The Animal Adventures Band','Children''s','18:30:00','20:00:00'),
+('Melody Meadow','Lucy the Lullaby Lady','Family','12:00:00','13:30:00'),
+('Discovery Den','The Juggling Jesters','Comedy','13:00:00','15:00:00'),
+('World Music Oasis','Mariachi Fiesta','World','15:30:00','17:00:00'),
+('Acoustic Alley','The Storyteller''s Circle' , 'Storytelling','15:30:00','17:30:00'),
+('Sunshine Stage','The Bouncing Ball Brigade','Dance','17:00:00','19:30:00' ),
+('Discovery Den','The Kazoo Crew','Comedy','17:30:00','19:00:00'),
+('World Music Oasis','The Global Grooves Ensemble','World','18:30:00','20:00:00'),
+('Harmony Grove','The Dreamy Lullaby Harp','Instrumental','19:30:00','21:00:00');
