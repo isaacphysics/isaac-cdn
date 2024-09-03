@@ -2,8 +2,8 @@
 
 CREATE TABLE "stage" (
 	"stage_name"	TEXT NOT NULL,
-	"capacity"	INTEGER,
-	"location"	TEXT,
+	"capacity"	INTEGER NOT NULL CHECK (capacity >=100 AND capacity <=500),
+	"location"	TEXT NOT NULL,
 	"description"	TEXT,
 	PRIMARY KEY("stage_name")
 );
@@ -11,10 +11,10 @@ CREATE TABLE "stage" (
 CREATE TABLE "performance" (
 	"performance_id"	INTEGER NOT NULL,
 	"stage_name"	TEXT NOT NULL,
-	"artist"	TEXT,
-	"genre"	TEXT NOT NULL,
-	"start_time"	TEXT,
-	"end_time"	TEXT,
+	"artist"	TEXT NOT NULL ,
+	"genre"	TEXT ,
+	"start_time"	TEXT NOT NULL ,
+	"end_time"	TEXTNOT NULL,
 	PRIMARY KEY("performance_id"),
 	FOREIGN KEY("stage_name") REFERENCES "stage"("stage_name")
 );
