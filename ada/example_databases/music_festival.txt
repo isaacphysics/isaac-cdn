@@ -1,55 +1,62 @@
- -- Table creation --
+-- Table creation --
 
 CREATE TABLE "stage" (
+	"stage_ref"	TEXT NOT NULL CHECK(length("stage_ref" <= 8)),
 	"stage_name"	TEXT NOT NULL,
-	"capacity"	INTEGER NOT NULL CHECK (capacity >=100 AND capacity <=500),
+	"capacity"	INTEGER NOT NULL,
 	"location"	TEXT NOT NULL,
 	"description"	TEXT,
-	PRIMARY KEY("stage_name")
+	PRIMARY KEY("stage_ref")
 );
 
 CREATE TABLE "performance" (
 	"performance_id"	INTEGER NOT NULL,
-	"stage_name"	TEXT NOT NULL,
-	"artist"	TEXT NOT NULL ,
-	"genre"	TEXT ,
-	"start_time"	TEXT NOT NULL ,
-	"end_time"	TEXTNOT NULL,
+	"stage"			TEXT NOT NULL,
+	"artist"		TEXT NOT NULL,
+	"genre"			TEXT NOT NULL,
+	"start_time"		TEXT NOT NULL,
+	"end_time"		TEXT NOT NULL,
 	PRIMARY KEY("performance_id"),
-	FOREIGN KEY("stage_name") REFERENCES "stage"("stage_name")
+	FOREIGN KEY("stage") REFERENCES "stage"("stage_ref")
 );
 
 -- Inserting data -- 
 
-INSERT INTO stage (stage_name, capacity, location, description) VALUES
-('Sunshine Stage',500,'Main Field','The biggest stage, with plenty of room to dance!'),
-('Harmony Grove',100,'Wooded Area','A cozy stage nestled among the trees'),
-('Kids'' Corner',100,'Near the Playground','Fun and games for the little ones!'),
-('Melody Meadow',250,'Open Field','Relax and enjoy the music in the sunshine'),
-('Acoustic Alley',200,'Under the Tent','Unplugged performances and intimate vibes'),
-('Discovery Den',150,'Hidden Clearing','Find new sounds and hidden talents!'),
-('World Music Oasis',300,'Multicultural Village','Experience music from around the globe!');
+INSERT INTO "stage" ("stage_ref","stage_name","capacity","location","description") VALUES 
+('sun','Sunshine Stage',500,'Main Field','The biggest stage, with plenty of room to dance!'),
+('harmony','Harmony Grove',100,'Wooded Area','A cozy stage nestled among the trees'),
+('melody','Melody Meadow',250,'Open Field','Relax and enjoy the music in the sunshine'),
+('acous','Acoustic Alley',200,'Under the Tent','Unplugged performances and intimate vibes'),
+('discov','Discovery Den',150,'Hidden Clearing','Find new sounds and hidden talents!'),
+('world','World Music Oasis',300,'Multicultural Village','Experience music from around the globe!'),
+('kids','Kids'' Corner',100,'Near the Playground','Fun and games for the little ones!');
 
-
-
-INSERT INTO performance  (stage_name, artist, genre, start_time, end_time )  VALUES  
-('Kids'' Corner','The Happy Hippo Band','Children''s','10:00:00','11:30:00'),
-('Harmony Grove','The Sunny Day Singers','Folk','11:00:00','12:30:00'),
-('Sunshine Stage','DJ Bubble Pop','Dance','12:30:00','14:30:00'),
-('World Music Oasis','The Rainbow Drum Circle', 'World','13:30:00','14:30:00'),
-('Kids'' Corner','The Silly Songbirds','Children''s','12:30:00', '14:00:00'),
-('Acoustic Alley','The Acoustic Guitar Duo','Acoustic','14:00:00','15:00:00'),
-('Melody Meadow','The Funky Family Band','Family','16:00:00','18:00:00'),
-('Kids'' Corner','The Magical Marionette Show','Children''s','16:00:00','17:30:00'),
-('Melody Meadow','The Starlight Orchestra','Family','20:00:00','21:00:00'),
-('Sunshine Stage','DJ Glowstick','Dance','21:00:00','22:00:00'),
-('Discovery Den','The Whimsical Wizards','Comedy','21:30:00','22:30:00'),
-('Kids'' Corner','The Animal Adventures Band','Children''s','18:30:00','20:00:00'),
-('Melody Meadow','Lucy the Lullaby Lady','Family','12:00:00','13:30:00'),
-('Discovery Den','The Juggling Jesters','Comedy','13:00:00','15:00:00'),
-('World Music Oasis','Mariachi Fiesta','World','15:30:00','17:00:00'),
-('Acoustic Alley','The Storyteller''s Circle' , 'Storytelling','15:30:00','17:30:00'),
-('Sunshine Stage','The Bouncing Ball Brigade','Dance','17:00:00','19:30:00' ),
-('Discovery Den','The Kazoo Crew','Comedy','17:30:00','19:00:00'),
-('World Music Oasis','The Global Grooves Ensemble','World','18:30:00','20:00:00'),
-('Harmony Grove','The Dreamy Lullaby Harp','Instrumental','19:30:00','21:00:00');
+INSERT INTO "performance" ("performance_id","stage","artist","genre","start_time","end_time") VALUES 
+(1,'sun','The Happy Hippo Band','Children''s','10:00:00','11:30:00'),
+(2,'kids','The Sunny Day Singers','Folk','11:00:00','12:30:00'),
+(3,'melody','DJ Bubble Pop','Dance','12:30:00','14:30:00'),
+(4,'world','The Rainbow Drum Circle','World','13:30:00','14:30:00'),
+(5,'sun','The Silly Songbirds','Children''s','12:30:00','14:00:00'),
+(6,'kids','The Acoustic Guitar Duo','Acoustic','14:00:00','15:00:00'),
+(7,'sun','The Funky Family Band','Family','16:00:00','18:00:00'),
+(8,'discov','The Magical Marionette Show','Family','16:00:00','17:30:00'),
+(9,'sun','The Starlight Orchestra','Family','20:00:00','21:00:00'),
+(10,'sun','DJ Glowstick','Dance','21:00:00 ','22:00:00'),
+(11,'discov','The Whimsical Wizards','Comedy','21:30:00','22:30:00'),
+(12,'melody','The Animal Adventures Band','Children''s','18:30:00','20:00:00'),
+(13,'acous','Lucy the Lullaby Lady','Family','12:00:00','13:00:00'),
+(14,'acous','The Juggling Jesters','Comedy','13:30:00','15:00:00'),
+(15,'world','Mariachi Fiesta','World','15:30:00','17:00:00'),
+(16,'harmony','The Storyteller''s Circle','Children''s','15:30:00','17:30:00'),
+(17,'melody','The Bouncing Ball Brigade','Dance','15:00:00','16:00:00'),
+(18,'kids','The Kazoo Crew','Comedy','17:30:00','19:00:00'),
+(19,'world','The Global Grooves Ensemble','World','18:30:00','20:00:00'),
+(20,'acous','The Dreamy Lullaby Harp','Acoustic','19:30:00','21:00:00'),
+(21,'melody','Harmony Collective','Folk','11:00:00','12:00:00'),
+(22,'world','Tribal Beats','World','20:30:00','21:30:00'),
+(23,'harmony','Nature''s Echo','Acoustic','12:00:00','13:00:00'),
+(24,'harmony','Leafy strings','Folk','13:30:00','14:30:00'),
+(25,'discov','Space explorers','Electronic','14:00:00','15:00:00'),
+(26,'discov','Future sounds','Electronic','12:30:00','13:00:00'),
+(27,'acous','Mountain Melodies','Folk','16:00:00','17:30:00'),
+(28,'acous','Silent strings','Folk','11:00:00','11:45:00');
