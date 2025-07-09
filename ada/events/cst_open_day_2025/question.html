@@ -5,28 +5,33 @@
     <link rel='shortcut icon' href='data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAFQCAABUAgAAAAAAAAAAAAACAgHXAgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgHXAgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/09PT//Gxsb/pqal/6Kiov9SUlL/Hh4d/+Hh4f/Hx8f/JSUk/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/05OTv/+/v7/XFxc/wICAf8CAgH/k5OS/9vb2/+urq3/HBwb/1dXV/8FBQT/AgIB/wICAf8CAgH/AgIB/wICAf+/v77/8vLy/wUFBP8CAgH/AgIB/woKCf/7+/v/R0dH/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/3Nzc/9vb2/8CAgH/AgIB/wICAf82NjX/6Ojo/8bGxv8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/729vP/m5ub/AgIB/wICAf8CAgH/cHBw/3BwcP/19fX/RUVF/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf9+fn7//v7+/x0dHP8CAgH/AgIB/7a2tf8oKCf/tLSz/6enpv8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/DQ0M/87Ozv+cnJv/CQkI/0hISP+7u7r/AgIB/5KSkf/w8PD/BQUE/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8LCwr/Z2dn/5eXlv97e3v/EBAP/wICAf8kJCP/RUVF/wkJCP8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgHYAgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgH/AgIB/wICAf8CAgHXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==' />
     <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet' type='text/css'>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+        }
+        html {
             background-color: #000000;
+        }
+
+        body {
             color: #ffffff;
             width: 100%;
-            height: 100%;
-            margin: 0;
             font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24pt;
+            font-size: 1.5vw;
+            margin: 0;
         }
 
         #panel {
             background-color: #1e1e1e;
             border: 3px solid #c2c6c9;
             border-radius: 1.5rem;
-            margin: 10%;
-            padding: 25px;
-            max-width: 80%;
+            padding: 2.5vh;
             min-width: 40%;
+            max-height: 85vh;
+            margin: 7.5vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
         }
 
         @media (max-width: 450px) {
@@ -43,8 +48,10 @@
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3vw;
             font-weight: bold;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         h2 {
@@ -61,22 +68,23 @@
         }
 
         #logo {
-            max-width: 200px;
-            max-height: 15%;
-            float: right;
-            margin: 0 0 2rem 2rem;
+            position: absolute;
+            width: 13vw;
+            top: 3%;
+            right: 2%;
         }
         #slash {
             color: #ff4dc9;
         }
         #question-diagram {
-            width: 50%;
-            margin-right: 5rem;
+            margin-right: 16px;
         }
         #diagram-container {
-            margin-top: 4rem;
+            margin-top: calc(1.5rem);
             display: flex;
             justify-content: center;
+            flex-grow: 1;
+            overflow: auto;
         }
     </style>
 </head>
